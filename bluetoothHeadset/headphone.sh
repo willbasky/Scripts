@@ -12,34 +12,31 @@ source blueCommon
 source ../color_log.sh
 
 debug() {
-  if [[ ${ARG1} == "debug" || ${ARG2} == "debug" ]]; then
-    local name="$1";
-    clr_green "Debug: $name"
-  fi
+  debug3 "$ARG1" "$ARG2" "$1"
 }
 
 if [[ $1 = "on" ]]; then
   debug "on"
-  prepareB.sh
+  prepareB.sh "$ARG1" "$ARG2"
 elif [[ $1 = "off" ]]; then
   debug "off"
-  stopB.sh
+  stopB.sh "$ARG1" "$ARG2"
 elif [[ ${IS_CONNECTED} == "yes" ]]; then
   debug "yes"
-  stopB.sh
+  stopB.sh "$ARG1" "$ARG2"
 elif [[ ${IS_CONNECTED} == "no" ]]; then
   debug "no"
-  prepareB.sh
+  prepareB.sh "$ARG1" "$ARG2"
 elif [[ ${IS_CONTROLLER} == "yes" ]]; then
   # Bluetooth is powered but a headset not connected.
   debug "controller powered on"
-  prepareB.sh
+  prepareB.sh "$ARG1" "$ARG2"
 elif [[ ${IS_BLUETOOTH} == "inactive" ]]; then
   debug "inactive"
-  prepareB.sh
+  prepareB.sh "$ARG1" "$ARG2"
 elif [[ ${IS_BLOCKED} == "blocked" ]]; then
   debug "blocked"
-  prepareB.sh
+  prepareB.sh "$ARG1" "$ARG2"
 else
   clr_red "Provide on/off argument"
 fi

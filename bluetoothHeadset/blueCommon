@@ -5,7 +5,7 @@
 source sensetive
 
 function isHeadsetConnected {
-  bluetoothctl info $HEADSET_MAC | grep 'Connected' | awk '{print $2}'
+  bluetoothctl info "$HEADSET_MAC" | grep 'Connected' | awk '{print $2}'
 }
 
 function isController {
@@ -21,7 +21,14 @@ function isBlocked {
 }
 
 function connectHeadset {
-  bluetoothctl connect ${HEADSET_MAC} | grep -c 'Failed'
+  bluetoothctl connect "${HEADSET_MAC}" | grep -c 'Failed'
+}
+
+debug3() {
+  if [[ "$1" == "debug" || "$2" == "debug" ]]; then
+    local name="$3";
+    clr_green "DEBUG | $name"
+  fi
 }
 
 IS_CONNECTED=$(isHeadsetConnected)

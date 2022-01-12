@@ -2,50 +2,46 @@
 
 # set -eux -o pipefail
 
+ARG1=$1
+ARG2=$2
+
 source blueCommon
 source ../color_log.sh
 
+debug() {
+  debug3 "$ARG1" "$ARG2" "$1"
+}
 
-echo "Checking..."
-clr_blue "Bluetooth" -n;
-clr_reset " is " -n;
-clr_cyan ${IS_BLUETOOTH}
+debug "checking..."
+debug "Bluetooth is ${IS_BLUETOOTH}"
 if [[ ${IS_BLUETOOTH} == 'inactive' ]]; then
-    echo "Activating..."
+    debug "activating..."
     systemctl start bluetooth;
     sleep 1;
     IS_BLUETOOTH=$(isBluetooth);
 
-    clr_blue "Bluetooth" -n;
-    clr_reset " is " -n;
-    clr_cyan ${IS_BLUETOOTH}
+    debug "Bluetooth is ${IS_BLUETOOTH}"
 fi
 
-clr_blue "Bluetooth" -n;
-clr_reset " is " -n;
-clr_cyan ${IS_BLOCKED}
+debug "Bluetooth is ${IS_BLOCKED}"
 
 if [[ ${IS_BLOCKED} == 'blocked' ]]; then
-    echo "Unblocking..."
+    debug "unblocking..."
     rfkill unblock bluetooth;
     sleep 1;
     IS_BLOCKED=$(isBlocked);
 
-    clr_blue "Bluetooth" -n;
-    clr_reset " is " -n;
-    clr_cyan ${IS_BLOCKED}
-
+    debug "Bluetooth is ${IS_BLOCKED}"
     sleep 6
 fi
-
 
 clr_reset "Powering on..." -n;
 POWER=$(bluetoothctl power on)
 if [[ ${POWER} == '1' ]]; then
-  clr_red "Failed" -n;
+  clr_red " failed" -n;
   clr_reset " to power on bluetooth"
 else
-  clr_reset " succeeded"
+  clr_blue " succeeded"
 fi
 
 
@@ -55,10 +51,9 @@ clr_reset "Connecting..." -n;
 CONNECT=$(connectHeadset)
 
 if [[ ${CONNECT} == '1' ]]; then
-  clr_red "Failed" -n;
-  clr_reset " to connect the headset ${HEADSET_MAC}"
-  clr_green "Check" -n;
-  clr_reset " a power of the headset!"
+  clr_red " failed";
+  clr_blue "Check" -n;
+  clr_reset " a power of the headset ${HEADSET_MAC}"
 else
-  clr_reset " succeeded"
+  clr_blue " succeeded"
 fi
