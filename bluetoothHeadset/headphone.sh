@@ -2,33 +2,44 @@
 
 # set -eux -o pipefail
 
+ARG1=$1
+ARG2=$2
 USER=$(whoami)
-cd "/home/$USER/sources/scripts/bluetoothHeadset/"
+
+cd "/home/$USER/sources/scripts/bluetoothHeadset/" || exit
 
 source blueCommon
+source ../color_log.sh
+
+debug() {
+  if [[ ${ARG1} == "debug" || ${ARG2} == "debug" ]]; then
+    local name="$1";
+    clr_green "Debug: $name"
+  fi
+}
 
 if [[ $1 = "on" ]]; then
-  echo "Case: on"
+  debug "on"
   prepareB.sh
 elif [[ $1 = "off" ]]; then
-  echo "Case: off"
+  debug "off"
   stopB.sh
 elif [[ ${IS_CONNECTED} == "yes" ]]; then
-  echo "Case: yes"
+  debug "yes"
   stopB.sh
 elif [[ ${IS_CONNECTED} == "no" ]]; then
-  echo "Case: no"
+  debug "no"
   prepareB.sh
 elif [[ ${IS_CONTROLLER} == "yes" ]]; then
   # Bluetooth is powered but a headset not connected.
-  echo "Case: controller powered on"
+  debug "controller powered on"
   prepareB.sh
 elif [[ ${IS_BLUETOOTH} == "inactive" ]]; then
-  echo "Case: inactive"
+  debug "inactive"
   prepareB.sh
 elif [[ ${IS_BLOCKED} == "blocked" ]]; then
-  echo "Case: blocked"
+  debug "blocked"
   prepareB.sh
 else
-  echo "Provide on/off argument"
+  clr_red "Provide on/off argument"
 fi
