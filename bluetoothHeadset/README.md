@@ -7,7 +7,7 @@
 1. Create sensetive file
 
     ```bash
-    mkdir sensetive
+    touch sensetive
     ```
 
 2. Add useful content there:
