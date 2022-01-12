@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# set -eux -o pipefail
+
+source sensetive
+
+function isHeadsetConnected {
+  bluetoothctl info $HEADSET_MAC | grep 'Connected' | awk '{print $2}'
+}
+
+function isController {
+  bluetoothctl show | grep 'Powered'| awk '{print $2}'
+}
+
+function isBluetooth {
+  systemctl is-active bluetooth
+}
+
+function isBlocked {
+  rfkill -no device,soft | awk -v dev="$BLUETOOTH" '$1 == dev {print $2}'
+}
+
+function connectHeadset {
+  bluetoothctl connect ${HEADSET_MAC} | grep -c 'Failed'
+}
+
+IS_CONNECTED=$(isHeadsetConnected)
+IS_CONTROLLER=$(isController)
+IS_BLOCKED=$(isBlocked)
+IS_BLUETOOTH=$(isBluetooth)
