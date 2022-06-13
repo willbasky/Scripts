@@ -5,7 +5,7 @@
 ARG1=$1
 ARG2=$2
 
-source blueCommon
+source ./blueCommon
 source ../color_log.sh
 
 debug() {
@@ -13,17 +13,20 @@ debug() {
 }
 
 debug "checking..."
-debug "Bluetooth is ${IS_BLUETOOTH}"
+
+IS_BLUETOOTH=$(isBluetooth)
+debug "Bluetooth service is ${IS_BLUETOOTH}"
+
 if [[ ${IS_BLUETOOTH} == 'inactive' ]]; then
     debug "activating..."
     systemctl start bluetooth;
     sleep 1;
     IS_BLUETOOTH=$(isBluetooth);
-
-    debug "Bluetooth is ${IS_BLUETOOTH}"
+    debug "Bluetooth service is ${IS_BLUETOOTH}"
 fi
 
-debug "Bluetooth is ${IS_BLOCKED}"
+IS_BLOCKED=$(isBlocked)
+debug "Bluetooth chip is ${IS_BLOCKED}"
 
 if [[ ${IS_BLOCKED} == 'blocked' ]]; then
     debug "unblocking..."
@@ -31,7 +34,7 @@ if [[ ${IS_BLOCKED} == 'blocked' ]]; then
     sleep 1;
     IS_BLOCKED=$(isBlocked);
 
-    debug "Bluetooth is ${IS_BLOCKED}"
+    debug "Bluetooth chip is ${IS_BLOCKED}"
     sleep 6
 fi
 
@@ -47,13 +50,12 @@ fi
 
 sleep 3
 
-clr_reset "Connecting..." -n;
+clr_reset "Connecting to headset..." -n;
 CONNECT=$(connectHeadset)
 
 if [[ ${CONNECT} == '1' ]]; then
   clr_red " failed";
-  clr_blue "Check" -n;
-  clr_reset " a power of the headset ${HEADSET_MAC}"
+  debug "Failed to connect to mac ${HEADSET_MAC}"
 else
   clr_blue " succeeded"
 fi

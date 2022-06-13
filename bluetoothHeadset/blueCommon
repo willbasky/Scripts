@@ -2,7 +2,7 @@
 
 # set -eux -o pipefail
 
-source sensetive
+source ./sensetive
 
 function isHeadsetConnected {
   bluetoothctl info "$HEADSET_MAC" | grep 'Connected' | awk '{print $2}'
@@ -31,7 +31,4 @@ debug3() {
   fi
 }
 
-IS_CONNECTED=$(isHeadsetConnected)
-IS_CONTROLLER=$(isController)
-IS_BLOCKED=$(isBlocked)
-IS_BLUETOOTH=$(isBluetooth)
+
