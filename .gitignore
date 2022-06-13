@@ -5,6 +5,7 @@ shadowsocks/
 gimp/
 build-supercollider/
 kensington-expert-trackball-linux-config/
+sntrack/
 
 # Not prepared scripts
 reduce_backlight_range.sh
