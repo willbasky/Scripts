@@ -8,8 +8,8 @@ function isHeadsetConnected {
   bluetoothctl info "$HEADSET_MAC" | grep 'Connected' | awk '{print $2}'
 }
 
-function isController {
-  bluetoothctl show | grep 'Powered'| awk '{print $2}'
+function isControllerPowered {
+  bluetoothctl show | grep 'Powered' | awk '{print $2}'
 }
 
 function isBluetooth {

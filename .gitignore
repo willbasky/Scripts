@@ -15,6 +15,7 @@ convert-heif.sh
 store_backlight.sh
 shadow
 test-hello
+scitopdf
 
 # Other
 *.log

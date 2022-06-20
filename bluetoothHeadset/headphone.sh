@@ -15,32 +15,14 @@ debug() {
   debug3 "$ARG1" "$ARG2" "$1"
 }
 
+debug "init..."
+
 if [[ $1 = "on" ]]; then
   debug "on"
   prepareB.sh "$ARG1" "$ARG2"
 elif [[ $1 = "off" ]]; then
   debug "off"
   stopB.sh "$ARG1" "$ARG2"
-IS_CONNECTED=$(isHeadsetConnected)
-elif [[ ${IS_CONNECTED} == "yes" ]]; then
-  debug "yes"
-  stopB.sh "$ARG1" "$ARG2"
-elif [[ ${IS_CONNECTED} == "no" ]]; then
-  debug "no"
-  prepareB.sh "$ARG1" "$ARG2"
-IS_CONTROLLER=$(isController)
-elif [[ ${IS_CONTROLLER} == "yes" ]]; then
-  # Bluetooth is powered but a headset not connected.
-  debug "controller powered on"
-  prepareB.sh "$ARG1" "$ARG2"
-IS_BLUETOOTH=$(isBluetooth)
-elif [[ ${IS_BLUETOOTH} == "inactive" ]]; then
-  debug "inactive"
-  prepareB.sh "$ARG1" "$ARG2"
-IS_BLOCKED=$(isBlocked)
-elif [[ ${IS_BLOCKED} == "blocked" ]]; then
-  debug "blocked"
-  prepareB.sh "$ARG1" "$ARG2"
 else
   clr_red "Provide on/off argument"
 fi

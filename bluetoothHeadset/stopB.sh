@@ -53,6 +53,9 @@ if [[ ${IS_BLUETOOTH} == "active" && ${IS_BLOCKED} == "unblocked" ]]; then
 
     IS_BLOCKED=$(isBlocked);
     debug "Bluetooth is ${IS_BLOCKED}"
+else
+  clr_reset "Bluetooth" -n;
+  clr_blue " already turned off"
 fi
 
 
