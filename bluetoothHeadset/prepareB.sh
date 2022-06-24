@@ -38,13 +38,17 @@ if [[ ${IS_BLOCKED} == 'blocked' ]]; then
     sleep 6
 fi
 
-clr_reset "Powering on..." -n;
 IS_POWERED=$(isControllerPowered)
-POWER=$(bluetoothctl power on)
+debug "Is powered: $IS_POWERED"
+
 if [[ ${IS_POWERED} == "yes" ]]; then
-  # debug "It is already powered";
-  clr_blue " already powered"
+  debug "It is already powered";
+  clr_blue "Bluetooth is already powered"
 else
+
+  clr_reset "Powering on..." -n;
+  POWER=$(bluetoothctl power on);
+
   if [[ ${POWER} == '1' ]]; then
     clr_red " failed" -n;
     clr_reset " to power on bluetooth"
@@ -55,12 +59,17 @@ fi
 
 sleep 3;
 
-clr_reset "Connecting to headset..." -n;
-CONNECT=$(connectHeadset);
 IS_CONNECTED=$(isHeadsetConnected);
+debug "Is connected: $IS_CONNECTED";
+
 if [[ ${IS_CONNECTED} == "yes" ]]; then
-  clr_blue " already connected"
+  debug "It is already connected";
+  clr_blue "Headset is already connected"
 else
+
+  clr_reset "Connecting to headset..." -n;
+  CONNECT=$(connectHeadset);
+
   if [[ ${CONNECT} == '1' ]]; then
     clr_red " failed";
     debug "Failed to connect to mac ${HEADSET_MAC}"
