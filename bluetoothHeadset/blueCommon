@@ -2,7 +2,10 @@
 
 # set -eux -o pipefail
 
-source ./sensetive
+SCRIPT_PATHS=$(dirname $(dirname $(realpath $0)))
+
+source $SCRIPTS_PATH/color_log.sh
+source $SCRIPTS_PATH/sensitive
 
 function isHeadsetConnected {
   bluetoothctl info "$HEADSET_MAC" | grep 'Connected' | awk '{print $2}'
@@ -31,4 +34,44 @@ debug3() {
   fi
 }
 
+function powerOff {
+    clr_reset "Powering headset off..." -n;
+    OFF=$(bluetoothctl power off);
+    sleep 1;
+    if [[ ${OFF} == '1' ]]; then
+      clr_red " failed" -n;
+      clr_reset " to power off bluetooth"
+    else
+      clr_blue " succeeded"
+    fi
+}
+
+function deactvateBluetooth {
+    clr_reset "Deactivating..." -n;
+    DEACTIVED=$(systemctl stop bluetooth);
+    sleep 1;
+    if [[ ${DEACTIVED} == '1' ]]; then
+      clr_red " failed" -n;
+      clr_reset " to deactvate bluetooth service"
+    else
+      clr_blue " succeeded"
+    fi
+    IS_BLUETOOTH=$(isBluetooth);
+    debug "Bluetooth service is ${IS_BLUETOOTH}"
+}
+
+function blockBluetooth {
+    clr_reset "Blocking..." -n;
+    KILL=$(rfkill block bluetooth);
+    sleep 1;
+    if [[ ${KILL} == '1' ]]; then
+      clr_red " failed" -n;
+      clr_reset " to block bluetooth"
+    else
+      clr_blue " succeeded"
+    fi
+
+    IS_BLOCKED=$(isBlocked);
+    debug "Bluetooth is ${IS_BLOCKED}"
+}
 

@@ -2,15 +2,15 @@
 
 ## Preparation
 
-### Customize sensetive data
+### Customize sensitive data
 
-1. Create sensetive file
+1. Create sensitive file in parent directory of `bluetoothHeadset`
 
     ```bash
-    touch sensetive
+    touch sensitive
     ```
 
-2. Add useful content there:
+2. Add useful content to sensitive:
 
 ```bash
     #!/bin/bash
@@ -26,13 +26,10 @@ to see your `HEADSET_MAC` use
 
     bluetoothctl devices
 
-3. Customize path `/home/$USER/sources/scripts/bluetoothHeadset/`
-   at `headphone.sh`
-
 
 ### Set global binary
 
-    ln -s ~/sources/scripts/bluetoothHeadset/headphone.sh ~/.local/bin/ear
+    ln -s ~/path/to/bluetoothHeadset/headphone.sh ~/.local/bin/ear
 
 ## Usage
 

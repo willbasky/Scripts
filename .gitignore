@@ -1,18 +1,14 @@
-sensetive
+sensitive
 
 # Not prepared directories
 shadowsocks/
 gimp/
 build-supercollider/
-kensington-expert-trackball-linux-config/
 sntrack/
 
 # Not prepared scripts
-reduce_backlight_range.sh
-restore_backlight.sh
 shadow_bash.sh
 convert-heif.sh
-store_backlight.sh
 shadow
 test-hello
 scitopdf
@@ -20,3 +16,7 @@ scitopdf
 # Other
 *.log
 .nix-script-cache
+*.toml
+logs/
+refoco/
+
