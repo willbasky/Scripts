@@ -5,12 +5,14 @@ import subprocess as sub
 import time
 from pathlib import Path
 
+vendor=0x047d
+product=0x2041
 kensington="kensington/Kensington_Expert_Setup.sh"
 exe_path = Path().resolve().joinpath(kensington)
 isConfigured=False
 
 while True:
-    dev = core.find(idVendor=0x047d, idProduct=0x2041)
+    dev = core.find(idVendor=vendor, idProduct=product)
     if dev is not None and not isConfigured:
         sub.run([exe_path])
         isConfigured=True

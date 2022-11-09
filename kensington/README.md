@@ -1,4 +1,4 @@
-# kensington-expert-trackball-linux-config
+# kensington
 
 This is a configuration script for the Kensington Expert trackball that remaps some of the buttons and edits some props.
 
@@ -25,14 +25,11 @@ ______________   |       |  ________________
 # Usage
 You can run the script simpy by calling the script `./Kensington_Expert_Setup.sh` there is no need for root.
 
-Or a better way is to put it in your desktop environment or window manager config, so that it runs when you login, the script also checks if the trackball is present before running any commands so its safe to use it like this.
+# Automatic applying configuration on linux
 
-I use i3 window manager so I put this in my i3 config `exec_always --no-startup-id ~/scrips/Kensington_Expert_Setup.sh`
+1. Update `vendor` and `product` variables in `Configure_kensington.py` with `lsusb` which shows `vendor:product` of usb devices.
+2. Add `Configure_kensington.py` to autostart on login. This script check is trackball connected every 5 minutes and if it is connected apply configuration.
 
-# Todo
-I want to change the scroll speed without using any other external programs but this trackball is missing a property in xinput props to be able to do so.
-
-The kensington software on windows allows you to press two buttons at once for a different input which is pretty cool, so I'm looking for a way to achieve this on linux too. It doesn't seem possible with xinput to my knowledge. 
 
 # Video
 [![Youtube](https://img.youtube.com/vi/hIAJ9Icq3KU/0.jpg)](https://www.youtube.com/watch?v=hIAJ9Icq3KU)
