@@ -7,7 +7,7 @@ from pathlib import Path
 
 vendor=0x047d
 product=0x2041
-kensington="kensington/Kensington_Expert_Setup.sh"
+kensington="Kensington_Expert_Setup.sh"
 exe_path = Path().resolve().joinpath(kensington)
 isConfigured=False
 
