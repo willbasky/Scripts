@@ -8,8 +8,10 @@ from pathlib import Path
 vendor=0x047d
 product=0x2041
 kensington="Kensington_Expert_Setup.sh"
-exe_path = Path().resolve().joinpath(kensington)
+exe_path = Path( __file__ ).absolute().parent.joinpath(kensington)
 isConfigured=False
+
+# print( exe_path )
 
 while True:
     dev = core.find(idVendor=vendor, idProduct=product)
